@@ -5,11 +5,6 @@ import botocore
 import socket
 import datetime
 
-# ToDo: find out what kind of event the guys want to trigger this. When someone tries to donwload the file? (cloudfront type trigger)
-# or, on a timer. (timer trigger)
-
-# ToDo: make sure permissions permit the file to be downloaded by the gateways.
-
 domname = "vpneast.aws.cms.gov"
 filename = 'vpneastIPs.txt'
 header = 'type=ip'
@@ -31,8 +26,6 @@ def execute(event, context):
     array_of_ips        = file_to_array(oldList)
     results_dict        = list_to_dict(array_of_ips)
     last24h_dict        = age_out_list(results_dict)
-    # put for loop here around updatelist() to allow for multi-ip lookup.
-    # update run_lookup() to grab 2 IPs
 
     newList             = updatelist(currentIPs, last24h_dict)
     write_status        = write_new_list(bucketname, filename, newList)
